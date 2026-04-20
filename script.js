@@ -1,89 +1,51 @@
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const feedbackEl = document.getElementById("feedback");
-const scoreEl = document.getElementById("score");
-const nextBtn = document.getElementById("nextBtn");
-
-let currentQuestion = 0;
-let score = 0;
-
-const questions = [
-  {
-    question: "A recipe uses 2 cups of sugar for 8 cookies. How many cups are needed for 16 cookies?",
-    answers: ["2", "4", "6", "8"],
-    correct: 1
-  },
-  {
-    question: "A bike travels 30 miles in 2 hours. What is the unit rate?",
-    answers: ["15 miles/hour", "60 miles/hour", "10 miles/hour", "20 miles/hour"],
-    correct: 0
-  },
-  {
-    question: "Simplify: 3(4 + 5)",
-    answers: ["27", "20", "12", "45"],
-    correct: 0
-  },
-  {
-    question: "What is the area of a rectangle with length 6 and width 4?",
-    answers: ["10", "24", "20", "12"],
-    correct: 1
-  },
-  {
-    question: "0.75 as a fraction is:",
-    answers: ["3/4", "1/2", "2/3", "4/5"],
-    correct: 0
-  }
-];
-
-function loadQuestion() {
-  nextBtn.disabled = true;
-  feedbackEl.textContent = "";
-
-  let q = questions[currentQuestion];
-  questionEl.textContent = q.question;
-  answersEl.innerHTML = "";
-
-  q.answers.forEach((answer, index) => {
-    let btn = document.createElement("button");
-    btn.textContent = answer;
-    btn.onclick = () => selectAnswer(btn, index);
-    answersEl.appendChild(btn);
-  });
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  text-align: center;
 }
 
-function selectAnswer(button, index) {
-  let correctIndex = questions[currentQuestion].correct;
-  let buttons = answersEl.children;
-
-  for (let btn of buttons) {
-    btn.disabled = true;
-  }
-
-  if (index === correctIndex) {
-    button.classList.add("correct");
-    feedbackEl.textContent = "Correct!";
-    score++;
-  } else {
-    button.classList.add("wrong");
-    buttons[correctIndex].classList.add("correct");
-    feedbackEl.textContent = "Not quite.";
-  }
-
-  scoreEl.textContent = "Score: " + score + " / " + questions.length;
-  nextBtn.disabled = false;
+.container {
+  background: white;
+  padding: 20px;
+  margin: 40px auto;
+  width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
 }
 
-nextBtn.onclick = () => {
-  currentQuestion++;
+button {
+  display: block;
+  margin: 8px auto;
+  padding: 10px;
+  width: 90%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  if (currentQuestion < questions.length) {
-    loadQuestion();
-  } else {
-    questionEl.textContent = "Quiz Complete!";
-    answersEl.innerHTML = "";
-    feedbackEl.textContent = "Final Score: " + score + " / " + questions.length;
-    nextBtn.style.display = "none";
-  }
-};
+button:hover {
+  opacity: 0.9;
+}
 
-loadQuestion();
+#nextBtn {
+  background: #2196F3;
+  color: white;
+}
+
+.correct {
+  background: #4CAF50 !important;
+  color: white;
+}
+
+.wrong {
+  background: #f44336 !important;
+  color: white;
+}
+
+#work {
+  text-align: left;
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+}
